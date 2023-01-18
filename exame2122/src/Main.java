@@ -5,38 +5,49 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException {
 
         String[] musics = {"On my way", "Memories", "Perfect", "Havana"};
-        double[][] info = { {201.6, 3.25},
-                            {189, 2.80},
-                            {256.8, 2.75},
-                            {202.8, 2.35}
+        double[][] info = {{201.6, 3.25},
+                {201.6, 2.80},
+                {256.8, 2.75},
+                {202.8, 2.35}
         };
 
         String mostExpensiveMusic = findMostExpensiveMusic(musics, info);
-        sort(musics,info);
+        sort(musics, info);
         double diff = calculateBiggestDifference(info);
         writeToFile(musics, info);
-        System.out.println("Música mais cara: "+ mostExpensiveMusic);
-        System.out.printf("Maior diferença: %.2f",diff);
+        System.out.println("Música mais cara: " + mostExpensiveMusic);
+        System.out.printf("Maior diferença: %.2f", diff);
     }
 
     private static void sort(String[] musics, double[][] info) {
-        for(int i = 0; i< musics.length; i++)
-        {
-            for(int j = 0; j< musics.length-1; j++)
-            {
-                if(info[j+1][0]<info[j][0])
-                {
-                    double temp = info[j+1][0];
-                    info[j+1][0]=info[j][0];
-                    info[j][0]=temp;
+        for (int i = 0; i < musics.length; i++) {
+            for (int j = 0; j < musics.length - 1; j++) {
+                if (info[j + 1][0] < info[j][0]) {
+                    double temp = info[j + 1][0];
+                    info[j + 1][0] = info[j][0];
+                    info[j][0] = temp;
 
-                    double temp2 = info[j+1][1];
-                    info[j+1][1]=info[j][1];
-                    info[j][1]=temp2;
+                    double temp2 = info[j + 1][1];
+                    info[j + 1][1] = info[j][1];
+                    info[j][1] = temp2;
 
-                    String tempS = musics[j+1];
-                    musics[j+1]=musics[j];
-                    musics[j]=tempS;
+                    String tempS = musics[j + 1];
+                    musics[j + 1] = musics[j];
+                    musics[j] = tempS;
+                } else if (info[j + 1][0] == info[j][0]) {
+                    if (musics[j + 1].compareTo(musics[j]) < 0){
+                        double temp = info[j + 1][0];
+                        info[j + 1][0] = info[j][0];
+                        info[j][0] = temp;
+
+                        double temp2 = info[j + 1][1];
+                        info[j + 1][1] = info[j][1];
+                        info[j][1] = temp2;
+
+                        String tempS = musics[j + 1];
+                        musics[j + 1] = musics[j];
+                        musics[j] = tempS;
+                    }
                 }
             }
         }
@@ -63,7 +74,7 @@ public class Main {
             }
         }
 
-        return max-min;
+        return max - min;
     }
 
     private static String findMostExpensiveMusic(String[] musics, double[][] info) {
